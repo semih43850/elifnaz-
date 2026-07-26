@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Aşkım</title>
+
+<style>
+
+body{
+    margin:0;
+    height:100vh;
+    background:black;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+    font-family:Arial,sans-serif;
+}
+
+
+/* Feuille pliée au départ */
+
+.paper{
+    width:350px;
+    height:250px;
+    position:relative;
+    perspective:1200px;
+}
+
+
+/* Intérieur de la feuille A4 */
+
+.inside{
+    position:absolute;
+    width:350px;
+    height:500px;
+    top:-125px;
+    left:0;
+    background:white;
+    z-index:1;
+}
+
+
+
+/* Parties pliées */
+
+.top,
+.bottom{
+    position:absolute;
+    width:350px;
+    height:125px;
+    background:white;
+    left:0;
+    z-index:3;
+    transition:1.8s ease;
+}
+
+
+.top{
+    top:0;
+    transform-origin:bottom;
+}
+
+
+.bottom{
+    bottom:0;
+    transform-origin:top;
+}
+
+
+
+/* Ligne du pli */
+
+.fold{
+    position:absolute;
+    width:350px;
+    height:3px;
+    background:#ddd;
+    top:124px;
+    z-index:6;
+}
+
+
+
+/* Message au milieu */
+
+.message{
+    position:absolute;
+    width:350px;
+    top:50%;
+    transform:translateY(-50%);
+    text-align:center;
+    font-size:32px;
+    color:black;
+    opacity:0;
+    z-index:4;
+    transition:1s;
+}
+
+
+.show{
+    opacity:1;
+}
+
+
+
+/* Coeur */
+
+.heart{
+    position:absolute;
+    left:150px;
+    top:100px;
+    font-size:50px;
+    cursor:pointer;
+    z-index:10;
+    transition:.6s;
+}
+
+
+.explode{
+    transform:scale(3);
+    opacity:0;
+}
+
+
+
+/* Ouverture de la feuille */
+
+.open .top{
+    transform:translateY(-125px);
+}
+
+
+.open .bottom{
+    transform:translateY(125px);
+}
+
+
+.open .fold{
+    opacity:0;
+}
+
+
+
+button{
+    margin:20px 8px;
+    padding:12px 25px;
+    border:none;
+    border-radius:20px;
+    color:white;
+    font-size:18px;
+}
+
+
+.non{
+    background:red;
+}
+
+
+.oui{
+    background:green;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="paper" id="paper">
+
+    <div class="inside"></div>
+
+    <div class="top"></div>
+
+    <div class="bottom"></div>
+
+    <div class="fold"></div>
+
+
+    <div class="message" id="message">
+
+        Ça va Aşkım ?
+
+        <br>
+
+        <button class="non" onclick="location.href='index2non.html'">
+            Non
+        </button>
+
+        <button class="oui" onclick="location.href='index2oui.html'">
+            Oui
+        </button>
+
+    </div>
+
+
+    <div class="heart" onclick="openLetter()">
+        🩵
+    </div>
+
+
+</div>
+
+
+
+<script>
+
+function openLetter(){
+
+    document.querySelector(".heart")
+    .classList.add("explode");
+
+
+    setTimeout(()=>{
+
+        document.getElementById("paper")
+        .classList.add("open");
+
+
+        setTimeout(()=>{
+
+            document.getElementById("message")
+            .classList.add("show");
+
+        },1500);
+
+
+    },500);
+
+}
+
+</script>
+
+
+</body>
+</html>
