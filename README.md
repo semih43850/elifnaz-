@@ -1,1 +1,389 @@
 # elifnaz-
+
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pour Elifnaz ❤️</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+overflow:hidden;
+background:linear-gradient(135deg,#ffd6ec,#ffeef7,#dff8ff);
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+#container{
+text-align:center;
+z-index:5;
+}
+
+h1{
+font-size:50px;
+color:#ff2e6d;
+margin-bottom:40px;
+text-shadow:0 0 15px white;
+}
+
+button{
+padding:18px 45px;
+font-size:28px;
+border:none;
+border-radius:18px;
+cursor:pointer;
+transition:.3s;
+margin:20px;
+}
+
+#yes{
+background:#34d399;
+color:white;
+}
+
+#no{
+background:#ff5c8a;
+color:white;
+}
+
+#emoji{
+position:absolute;
+top:45%;
+left:50%;
+transform:translate(-50%,-50%);
+font-size:100px;
+display:none;
+z-index:20;
+animation:pop .8s;
+}
+
+@keyframes pop{
+
+0%{transform:translate(-50%,-50%) scale(.2);}
+100%{transform:translate(-50%,-50%) scale(1);}
+
+}
+
+#love{
+display:none;
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+font-size:70px;
+color:#ff2e6d;
+font-weight:bold;
+text-shadow:0 0 20px white;
+z-index:30;
+animation:zoom 2s infinite;
+}
+
+@keyframes zoom{
+
+0%{transform:translate(-50%,-50%) scale(.8);}
+50%{transform:translate(-50%,-50%) scale(1.15);}
+100%{transform:translate(-50%,-50%) scale(.8);}
+
+}
+
+.petal{
+position:absolute;
+top:-40px;
+font-size:30px;
+animation:fall linear infinite;
+pointer-events:none;
+}
+
+@keyframes fall{
+
+0%{
+transform:translateY(-30px) rotate(0deg);
+opacity:1;
+}
+
+100%{
+transform:translateY(120vh) rotate(360deg);
+opacity:0;
+}
+
+}
+
+.confetti{
+position:absolute;
+width:10px;
+height:18px;
+animation:confetti 4s linear forwards;
+}
+
+@keyframes confetti{
+
+0%{
+transform:translateY(-50px) rotate(0);
+opacity:1;
+}
+
+100%{
+transform:translateY(110vh) rotate(900deg);
+opacity:0;
+}
+
+}
+
+#cat{
+display:none;
+position:absolute;
+left:-200px;
+bottom:80px;
+font-size:120px;
+z-index:40;
+animation:walk 8s linear forwards;
+}
+
+@keyframes walk{
+
+0%{left:-200px;}
+
+100%{left:120%;}
+
+}
+
+#bubble{
+display:none;
+position:absolute;
+left:40%;
+bottom:230px;
+background:white;
+padding:15px 25px;
+border-radius:30px;
+font-size:28px;
+box-shadow:0 0 20px rgba(0,0,0,.2);
+z-index:50;
+}
+
+#kiss{
+display:none;
+position:absolute;
+font-size:70px;
+left:50%;
+top:40%;
+transform:translate(-50%,-50%);
+animation:kiss 1.5s infinite;
+z-index:60;
+}
+
+@keyframes kiss{
+
+0%{transform:translate(-50%,-50%) scale(.7);}
+50%{transform:translate(-50%,-50%) scale(1.3);}
+100%{transform:translate(-50%,-50%) scale(.7);}
+
+}
+
+.dog{
+position:absolute;
+font-size:70px;
+animation:bounce 2s infinite;
+}
+
+@keyframes bounce{
+
+0%{transform:translateY(0);}
+50%{transform:translateY(-20px);}
+100%{transform:translateY(0);}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div id="emoji">☺️</div>
+
+<div id="love">
+Je t'aime Elifnaz ❤️
+</div>
+
+<div id="cat">
+🐱
+</div>
+
+<div id="bubble">
+Miaou ! 😽
+</div>
+
+<div id="kiss">
+😘
+</div>
+
+<div id="container">
+
+<h1>Est-ce que tu m'aimes ? ❤️</h1>
+
+<button id="yes">
+Oui
+</button>
+
+<button id="no">
+Non
+</button>
+
+</div>
+
+<script>
+
+let yes=document.getElementById("yes");
+let no=document.getElementById("no");
+
+let emoji=document.getElementById("emoji");
+let love=document.getElementById("love");
+let cat=document.getElementById("cat");
+let bubble=document.getElementById("bubble");
+let kiss=document.getElementById("kiss");
+
+let clicks=0;
+let ready=false;
+let size=1;
+
+yes.onclick=function(){
+
+if(!ready){
+
+emoji.style.display="block";
+
+setTimeout(function(){
+
+emoji.style.display="none";
+
+},1000);
+
+return;
+
+}
+
+document.getElementById("container").style.display="none";
+
+for(let i=0;i<250;i++){
+
+let c=document.createElement("div");
+
+c.className="confetti";
+
+c.style.left=Math.random()*100+"vw";
+
+c.style.background=
+Math.random()>0.5?
+"#00d084":
+"#3b82f6";
+
+c.style.animationDuration=
+2+Math.random()*3+"s";
+
+document.body.appendChild(c);
+
+}
+
+for(let i=0;i<70;i++){
+
+let p=document.createElement("div");
+
+p.className="petal";
+
+p.innerHTML="🌸";
+
+p.style.left=Math.random()*100+"vw";
+
+p.style.animationDuration=
+4+Math.random()*5+"s";
+
+p.style.fontSize=
+20+Math.random()*25+"px";
+
+document.body.appendChild(p);
+
+}
+
+cat.style.display="block";
+bubble.style.display="block";
+
+setTimeout(function(){
+
+bubble.style.display="none";
+
+},2500);
+
+setTimeout(function(){
+
+kiss.style.display="block";
+
+},5000);
+
+setTimeout(function(){
+
+kiss.style.display="none";
+
+love.style.display="block";
+
+},7000);
+
+setTimeout(function(){
+
+for(let i=0;i<25;i++){
+
+let dog=document.createElement("div");
+
+dog.className="dog";
+
+dog.innerHTML="🐶";
+
+dog.style.left=Math.random()*95+"vw";
+dog.style.top=Math.random()*90+"vh";
+dog.style.animationDelay=Math.random()*2+"s";
+
+document.body.appendChild(dog);
+
+}
+
+},9000);
+
+};
+
+no.onclick=function(){
+
+clicks++;
+
+size+=0.35;
+
+yes.style.transform="scale("+size+")";
+
+let noScale=Math.max(0,1-clicks*0.18);
+
+no.style.transform="scale("+noScale+")";
+
+if(clicks>=6){
+
+no.style.display="none";
+
+ready=true;
+
+}
+
+};
+
+</script>
+
+</body>
+</html>
