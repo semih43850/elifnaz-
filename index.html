@@ -3,63 +3,70 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pour Elifnaz</title>
+
+<title>Une lettre pour toi</title>
 
 <style>
-* {
-    box-sizing: border-box;
-    font-family: "Georgia", serif;
+
+*{
+    box-sizing:border-box;
+    font-family:"Georgia", serif;
 }
 
-body {
-    margin: 0;
-    height: 100vh;
-    background: linear-gradient(135deg, #e8f1ff, #ffffff);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#eaf3ff,#ffffff);
+    overflow:hidden;
 }
 
-.container {
-    text-align: center;
+
+.container{
+    text-align:center;
 }
 
-.envelope {
-    width: 260px;
-    height: 170px;
-    background: #f5f5f5;
-    position: relative;
-    border-radius: 8px;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-    cursor: pointer;
-    transition: 1s;
+
+.envelope{
+    width:280px;
+    height:180px;
+    background:#f8f8f8;
+    position:relative;
+    border-radius:10px;
+    box-shadow:0 20px 50px rgba(0,0,0,0.15);
+    cursor:pointer;
 }
 
-.envelope:before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    border-left: 130px solid transparent;
-    border-right: 130px solid transparent;
-    border-top: 90px solid #dbe9ff;
+
+.flap{
+    position:absolute;
+    width:0;
+    height:0;
+    border-left:140px solid transparent;
+    border-right:140px solid transparent;
+    border-top:100px solid #d5e6ff;
+    top:0;
+    transition:1s;
+    z-index:3;
 }
 
-.heart {
-    position: absolute;
-    top: 60px;
-    left: 105px;
-    width: 50px;
-    height: 50px;
-    background: #2f80ed;
-    transform: rotate(-45deg);
-    transition: .5s;
-    z-index: 2;
+
+.heart{
+    position:absolute;
+    top:65px;
+    left:115px;
+    width:50px;
+    height:50px;
+    background:#2f80ed;
+    transform:rotate(-45deg);
+    z-index:5;
 }
+
 
 .heart:before,
-.heart:after {
+.heart:after{
     content:"";
     position:absolute;
     width:50px;
@@ -68,203 +75,278 @@ body {
     border-radius:50%;
 }
 
-.heart:before {
+
+.heart:before{
     top:-25px;
-    left:0;
 }
 
-.heart:after {
+
+.heart:after{
     left:25px;
-    top:0;
 }
 
-.envelope.open .heart {
+
+.envelope.open .flap{
+    transform:rotateX(180deg);
+}
+
+
+.envelope.open .heart{
     opacity:0;
 }
 
-.letter {
+
+.letter{
     position:absolute;
-    width:230px;
-    min-height:300px;
     background:white;
-    left:15px;
+    width:240px;
+    min-height:330px;
+    left:20px;
     top:20px;
+    padding:25px;
     border-radius:5px;
-    padding:20px;
-    box-shadow:0 10px 30px rgba(0,0,0,.2);
-    transform:translateY(80px) scale(.7);
+    box-shadow:0 10px 35px rgba(0,0,0,.2);
+    transform:translateY(0);
     opacity:0;
     transition:1.5s;
-    overflow:hidden;
+    z-index:2;
 }
 
-.envelope.open .letter {
-    transform:translateY(-220px) scale(1);
+
+.envelope.open .letter{
+    transform:translateY(-240px);
     opacity:1;
 }
 
-.part {
-    max-height:0;
-    overflow:hidden;
-    transition:1s;
-    opacity:0;
+
+.section{
+    display:none;
+    animation:open 1s;
 }
 
-.part.show {
-    max-height:200px;
-    opacity:1;
+
+.section.active{
+    display:block;
 }
 
-button {
-    margin:10px;
-    padding:12px 30px;
+
+@keyframes open{
+    from{
+        opacity:0;
+        transform:translateY(20px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+
+button{
     border:none;
+    padding:12px 30px;
     border-radius:20px;
+    margin:8px;
     cursor:pointer;
     font-size:16px;
 }
 
-.yes {
+
+.yes{
     background:#2f80ed;
     color:white;
 }
 
-.no {
+
+.no{
     background:#ddd;
 }
 
-textarea {
-    width:90%;
-    height:80px;
-    margin-top:15px;
+
+textarea{
+    width:100%;
+    height:90px;
     border-radius:10px;
     padding:10px;
-    resize:none;
 }
 
-.send {
+
+.send{
     background:#2f80ed;
     color:white;
 }
 
-.hidden {
-    display:none;
-}
-
-h2 {
-    font-weight:normal;
-}
 
 </style>
+
 </head>
+
 
 <body>
 
+
 <div class="container">
 
-<div class="envelope" onclick="openEnvelope()">
+
+<div class="envelope" id="envelope" onclick="openEnvelope()">
+
+
+
+<div class="flap"></div>
+
 
 <div class="heart"></div>
 
-<div class="letter">
 
-<div class="part show">
-<h2>Elifnaz</h2>
-<p>Ça va ?</p>
-
-<button class="yes" onclick="event.stopPropagation(); yes()">Oui</button>
-<button class="no" onclick="event.stopPropagation(); no()">Non</button>
-
-</div>
+<div class="letter" onclick="nextPart(event)">
 
 
-<div class="part" id="second">
-<p>
-J’espère que tu vas bien.
-J’ai créé cette petite lettre pour toi.
-</p>
-</div>
+<div class="section active" id="part1">
 
+<h3>Ça va ?</h3>
 
-<div class="part" id="third">
-<p>
-Merci d’être une personne importante dans ma vie.
-</p>
-</div>
+<button class="yes" onclick="event.stopPropagation(); yes()">
+Oui
+</button>
 
-
-<div id="problem" class="hidden">
-
-<p>
-Pourquoi ça ne va pas ?
-</p>
-
-<textarea id="answer" placeholder="Écris ta réponse ici..."></textarea>
-
-<br>
-
-<button class="send" onclick="sendMessage()">
-Envoyer
+<button class="no" onclick="event.stopPropagation(); no()">
+Non
 </button>
 
 </div>
 
 
-</div>
+
+<div class="section" id="part2">
+
+<p>
+J’espère que tu vas bien.
+</p>
 
 </div>
 
+
+
+<div class="section" id="part3">
+
+<p>
+Je voulais juste prendre de tes nouvelles.
+</p>
+
 </div>
+
+
+
+<div class="section" id="problem">
+
+<p>
+Pourquoi ça ne va pas ?
+</p>
+
+<textarea id="message" placeholder="Écris ta réponse"></textarea>
+
+<br>
+
+<button class="send" onclick="sendToPlato(event)">
+Envoyer
+</button>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
 
 
 <script>
 
+
 let opened=false;
+let part=1;
+
 
 function openEnvelope(){
-    if(!opened){
-        document.querySelector(".envelope").classList.add("open");
-        opened=true;
 
-        setTimeout(()=>{
-            document.getElementById("second").classList.add("show");
-        },2000);
+if(!opened){
 
-        setTimeout(()=>{
-            document.getElementById("third").classList.add("show");
-        },4000);
-    }
+document.getElementById("envelope").classList.add("open");
+opened=true;
+
 }
+
+}
+
+
+
+function nextPart(event){
+
+event.stopPropagation();
+
+if(part===1){
+
+document.getElementById("part1").classList.remove("active");
+document.getElementById("part2").classList.add("active");
+part++;
+
+}
+
+else if(part===2){
+
+document.getElementById("part2").classList.remove("active");
+document.getElementById("part3").classList.add("active");
+part++;
+
+}
+
+}
+
 
 
 function yes(){
-    alert("Merci de me le dire.");
+
+alert("Merci pour ta réponse.");
+
 }
+
 
 
 function no(){
 
-    document.getElementById("problem").classList.remove("hidden");
+document.getElementById("part1").classList.remove("active");
+document.getElementById("problem").classList.add("active");
 
 }
 
 
-function sendMessage(){
 
-let text=document.getElementById("answer").value;
+function sendToPlato(event){
 
-let message=
-"Elle a répondu que ça n'allait pas : "+text;
+event.stopPropagation();
 
-let whatsapp=
-"https://wa.me/3248451044?text="
-+encodeURIComponent(message);
+let text=document.getElementById("message").value;
 
-window.open(whatsapp,"_blank");
+
+let platoLink="plato://";
+
+
+window.location.href=platoLink;
+
+
+// Si Plato ne s'ouvre pas,
+// le navigateur restera simplement sur la page.
 
 }
+
 
 </script>
+
 
 </body>
 </html>
