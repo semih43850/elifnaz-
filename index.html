@@ -3,184 +3,381 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MiniCraft - Démo</title>
+
+<title>Pour toi</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
 <style>
+
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins,sans-serif;
 }
 
 body{
-    background:#7ec850;
-    font-family:Arial,sans-serif;
-    overflow:hidden;
+
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#dce8ff,#ffffff);
+overflow:hidden;
+
 }
 
-#menu{
-    position:absolute;
-    width:100%;
-    height:100%;
-    background:linear-gradient(#5aa9e6,#7ec850);
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    gap:20px;
+.container{
+
+position:relative;
+
 }
 
-h1{
-    font-size:60px;
-    color:white;
-    text-shadow:4px 4px #000;
+.envelope{
+
+position:relative;
+width:360px;
+height:240px;
+background:#4f87ff;
+border-radius:12px;
+cursor:pointer;
+overflow:visible;
+transition:1s;
+
+}
+
+.envelope:before{
+
+content:"";
+position:absolute;
+left:0;
+top:0;
+width:0;
+height:0;
+
+border-left:180px solid transparent;
+border-right:180px solid transparent;
+border-top:120px solid #6ea2ff;
+
+transform-origin:top;
+transition:1s;
+z-index:5;
+
+}
+
+.envelope.open:before{
+
+transform:rotateX(180deg);
+
+}
+
+.paper{
+
+position:absolute;
+left:30px;
+bottom:15px;
+
+width:300px;
+height:420px;
+
+background:white;
+border-radius:8px;
+
+transform:translateY(220px);
+
+transition:2s;
+
+box-shadow:0 20px 40px rgba(0,0,0,.2);
+
+overflow:hidden;
+
+}
+
+.envelope.open .paper{
+
+transform:translateY(-140px);
+
+}
+
+.foldTop{
+
+position:absolute;
+top:0;
+left:0;
+
+width:100%;
+height:140px;
+
+background:#f6f6f6;
+
+transform-origin:top;
+
+transition:1s;
+
+z-index:4;
+
+}
+
+.foldBottom{
+
+position:absolute;
+bottom:0;
+left:0;
+
+width:100%;
+height:140px;
+
+background:#efefef;
+
+transform-origin:bottom;
+
+transition:1s;
+
+z-index:4;
+
+}
+
+.paper.open1 .foldBottom{
+
+transform:rotateX(-180deg);
+
+}
+
+.paper.open2 .foldTop{
+
+transform:rotateX(180deg);
+
+}
+
+.content{
+
+position:absolute;
+top:80px;
+left:20px;
+right:20px;
+
+text-align:center;
+
+opacity:0;
+
+transition:1s;
+
+}
+
+.paper.open2 .content{
+
+opacity:1;
+
+}
+
+.content h2{
+
+font-size:28px;
+margin-bottom:30px;
+color:#3366ff;
+
+}
+
+.buttons{
+
+display:flex;
+justify-content:center;
+gap:20px;
+
 }
 
 button{
-    width:260px;
-    padding:15px;
-    font-size:22px;
-    cursor:pointer;
-    border:none;
-    background:#6b6b6b;
-    color:white;
+
+padding:12px 35px;
+
+border:none;
+border-radius:50px;
+
+font-size:18px;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.yes{
+
+background:#4f87ff;
+color:white;
+
+}
+
+.no{
+
+background:#ececec;
+
 }
 
 button:hover{
-    background:#888;
+
+transform:scale(1.05);
+
 }
 
-#game{
-    display:none;
-    width:100vw;
-    height:100vh;
+.heart{
+
+position:absolute;
+
+top:95px;
+left:50%;
+
+transform:translateX(-50%);
+
+width:70px;
+height:70px;
+
+background:#2f6dff;
+
+transform-origin:center;
+
+clip-path:path("M35 63 L8 35 C-7 18 6 -5 25 6 C31 9 35 15 35 15 C35 15 39 9 45 6 C64 -5 77 18 62 35 Z");
+
+z-index:20;
+
+cursor:pointer;
+
+transition:.4s;
+
 }
 
-canvas{
-    display:block;
-    background:#79c05a;
+.heart:hover{
+
+transform:translateX(-50%) scale(1.08);
+
 }
+
+.secondLetter{
+
+position:absolute;
+
+width:300px;
+
+background:white;
+
+padding:25px;
+
+border-radius:10px;
+
+box-shadow:0 15px 35px rgba(0,0,0,.2);
+
+left:30px;
+
+top:-470px;
+
+display:none;
+
+animation:appear 1s forwards;
+
+}
+
+@keyframes appear{
+
+from{
+
+opacity:0;
+transform:translateY(100px);
+
+}
+
+to{
+
+opacity:1;
+transform:translateY(0);
+
+}
+
+}
+
+textarea{
+
+width:100%;
+
+height:120px;
+
+margin-top:20px;
+
+padding:15px;
+
+resize:none;
+
+border-radius:8px;
+
+border:1px solid #ccc;
+
+outline:none;
+
+font-size:16px;
+
+}
+
+.send{
+
+margin-top:20px;
+
+width:100%;
+
+background:#4f87ff;
+
+color:white;
+
+}
+
 </style>
+
 </head>
 
 <body>
 
-<div id="menu">
-    <h1>MiniCraft</h1>
+<div class="container">
 
-    <button onclick="startGame()">▶ Jouer</button>
-    <button onclick="alert('Version Démo HTML')">Options</button>
+<div class="heart" id="heart"></div>
+
+<div class="envelope" id="envelope">
+
+<div class="paper" id="paper">
+
+<div class="foldTop"></div>
+
+<div class="foldBottom"></div>
+
+<div class="content">
+
+<h2>Ça va Askim ?</h2>
+
+<div class="buttons">
+
+<button class="yes" id="yes">Oui</button>
+
+<button class="no" id="no">Non</button>
+
 </div>
 
-<div id="game">
-    <canvas id="canvas"></canvas>
 </div>
 
-<script>
+</div>
 
-const menu=document.getElementById("menu");
-const game=document.getElementById("game");
-const canvas=document.getElementById("canvas");
-const ctx=canvas.getContext("2d");
+</div>
 
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
+<div class="secondLetter" id="secondLetter">
 
-const tile=40;
+<h2>Pourquoi ça va pas ?</h2>
 
-const world=[];
+<textarea id="message"></textarea>
 
-const cols=Math.ceil(canvas.width/tile);
-const rows=Math.ceil(canvas.height/tile);
+<button class="send" id="send">
+Envoyer
+</button>
 
-for(let y=0;y<rows;y++){
+</div>
 
-    world[y]=[];
-
-    for(let x=0;x<cols;x++){
-
-        if(y>10)
-            world[y][x]=1;
-        else
-            world[y][x]=0;
-
-    }
-
-}
-
-const player={
-    x:100,
-    y:100,
-    w:30,
-    h:30,
-    speed:5
-};
-
-const keys={};
-
-document.addEventListener("keydown",e=>keys[e.key]=true);
-document.addEventListener("keyup",e=>keys[e.key]=false);
-
-canvas.addEventListener("click",e=>{
-
-    let x=Math.floor(e.offsetX/tile);
-    let y=Math.floor(e.offsetY/tile);
-
-    if(world[y])
-        world[y][x]=world[y][x]?0:1;
-
-});
-
-function startGame(){
-
-    menu.style.display="none";
-    game.style.display="block";
-
-    update();
-
-}
-
-function update(){
-
-    if(keys["ArrowLeft"]||keys["q"]) player.x-=player.speed;
-    if(keys["ArrowRight"]||keys["d"]) player.x+=player.speed;
-    if(keys["ArrowUp"]||keys["z"]) player.y-=player.speed;
-    if(keys["ArrowDown"]||keys["s"]) player.y+=player.speed;
-
-    draw();
-
-    requestAnimationFrame(update);
-
-}
-
-function draw(){
-
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-
-    for(let y=0;y<rows;y++){
-
-        for(let x=0;x<cols;x++){
-
-            if(world[y][x]){
-
-                ctx.fillStyle="#8B5A2B";
-                ctx.fillRect(x*tile,y*tile,tile,tile);
-
-                ctx.strokeStyle="#000";
-                ctx.strokeRect(x*tile,y*tile,tile,tile);
-
-            }
-
-        }
-
-    }
-
-    ctx.fillStyle="red";
-    ctx.fillRect(player.x,player.y,player.w,player.h);
-
-}
-
-</script>
-
-</body>
-</html>
+</div>
