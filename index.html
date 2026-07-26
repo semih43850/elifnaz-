@@ -1,368 +1,63 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Pour toi</title>
+<title>Pour Toi</title>
+
+<link rel="stylesheet" href="style.css">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
+
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-
-<style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Poppins,sans-serif;
-}
-
-body{
-
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-background:linear-gradient(135deg,#dce8ff,#ffffff);
-overflow:hidden;
-
-}
-
-.container{
-
-position:relative;
-
-}
-
-.envelope{
-
-position:relative;
-width:360px;
-height:240px;
-background:#4f87ff;
-border-radius:12px;
-cursor:pointer;
-overflow:visible;
-transition:1s;
-
-}
-
-.envelope:before{
-
-content:"";
-position:absolute;
-left:0;
-top:0;
-width:0;
-height:0;
-
-border-left:180px solid transparent;
-border-right:180px solid transparent;
-border-top:120px solid #6ea2ff;
-
-transform-origin:top;
-transition:1s;
-z-index:5;
-
-}
-
-.envelope.open:before{
-
-transform:rotateX(180deg);
-
-}
-
-.paper{
-
-position:absolute;
-left:30px;
-bottom:15px;
-
-width:300px;
-height:420px;
-
-background:white;
-border-radius:8px;
-
-transform:translateY(220px);
-
-transition:2s;
-
-box-shadow:0 20px 40px rgba(0,0,0,.2);
-
-overflow:hidden;
-
-}
-
-.envelope.open .paper{
-
-transform:translateY(-140px);
-
-}
-
-.foldTop{
-
-position:absolute;
-top:0;
-left:0;
-
-width:100%;
-height:140px;
-
-background:#f6f6f6;
-
-transform-origin:top;
-
-transition:1s;
-
-z-index:4;
-
-}
-
-.foldBottom{
-
-position:absolute;
-bottom:0;
-left:0;
-
-width:100%;
-height:140px;
-
-background:#efefef;
-
-transform-origin:bottom;
-
-transition:1s;
-
-z-index:4;
-
-}
-
-.paper.open1 .foldBottom{
-
-transform:rotateX(-180deg);
-
-}
-
-.paper.open2 .foldTop{
-
-transform:rotateX(180deg);
-
-}
-
-.content{
-
-position:absolute;
-top:80px;
-left:20px;
-right:20px;
-
-text-align:center;
-
-opacity:0;
-
-transition:1s;
-
-}
-
-.paper.open2 .content{
-
-opacity:1;
-
-}
-
-.content h2{
-
-font-size:28px;
-margin-bottom:30px;
-color:#3366ff;
-
-}
-
-.buttons{
-
-display:flex;
-justify-content:center;
-gap:20px;
-
-}
-
-button{
-
-padding:12px 35px;
-
-border:none;
-border-radius:50px;
-
-font-size:18px;
-
-cursor:pointer;
-
-transition:.3s;
-
-}
-
-.yes{
-
-background:#4f87ff;
-color:white;
-
-}
-
-.no{
-
-background:#ececec;
-
-}
-
-button:hover{
-
-transform:scale(1.05);
-
-}
-
-.heart{
-
-position:absolute;
-
-top:95px;
-left:50%;
-
-transform:translateX(-50%);
-
-width:70px;
-height:70px;
-
-background:#2f6dff;
-
-transform-origin:center;
-
-clip-path:path("M35 63 L8 35 C-7 18 6 -5 25 6 C31 9 35 15 35 15 C35 15 39 9 45 6 C64 -5 77 18 62 35 Z");
-
-z-index:20;
-
-cursor:pointer;
-
-transition:.4s;
-
-}
-
-.heart:hover{
-
-transform:translateX(-50%) scale(1.08);
-
-}
-
-.secondLetter{
-
-position:absolute;
-
-width:300px;
-
-background:white;
-
-padding:25px;
-
-border-radius:10px;
-
-box-shadow:0 15px 35px rgba(0,0,0,.2);
-
-left:30px;
-
-top:-470px;
-
-display:none;
-
-animation:appear 1s forwards;
-
-}
-
-@keyframes appear{
-
-from{
-
-opacity:0;
-transform:translateY(100px);
-
-}
-
-to{
-
-opacity:1;
-transform:translateY(0);
-
-}
-
-}
-
-textarea{
-
-width:100%;
-
-height:120px;
-
-margin-top:20px;
-
-padding:15px;
-
-resize:none;
-
-border-radius:8px;
-
-border:1px solid #ccc;
-
-outline:none;
-
-font-size:16px;
-
-}
-
-.send{
-
-margin-top:20px;
-
-width:100%;
-
-background:#4f87ff;
-
-color:white;
-
-}
-
-</style>
 
 </head>
 
 <body>
 
+<div class="background"></div>
+
 <div class="container">
 
-<div class="heart" id="heart"></div>
+<div id="heartLock" class="heart">
+♥
+</div>
 
-<div class="envelope" id="envelope">
+<div id="envelope" class="envelope">
 
-<div class="paper" id="paper">
+<div class="flap"></div>
 
-<div class="foldTop"></div>
+<div class="letter" id="letter">
 
-<div class="foldBottom"></div>
+<div class="page page-top" id="pageTop"></div>
 
-<div class="content">
+<div class="page page-middle">
 
-<h2>Ça va Askim ?</h2>
+<div class="question" id="question">
+
+<h1>Ça va Askim ?</h1>
 
 <div class="buttons">
 
-<button class="yes" id="yes">Oui</button>
+<button id="yesBtn">
+Oui
+</button>
 
-<button class="no" id="no">Non</button>
+<button id="noBtn">
+Non
+</button>
 
 </div>
 
 </div>
+
+</div>
+
+<div class="page page-bottom" id="pageBottom"></div>
 
 </div>
 
@@ -372,12 +67,107 @@ color:white;
 
 <h2>Pourquoi ça va pas ?</h2>
 
-<textarea id="message"></textarea>
+<textarea
+id="message"
+placeholder="Écris ici...">
+</textarea>
 
-<button class="send" id="send">
+<button id="sendBtn">
 Envoyer
+</button>
+
+<p id="success"></p>
+
+</div>
+
+</div>
+
+<script src="script.js"></script>
+
+<html lang="fr">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Pour Toi</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+</head>
+
+<body>
+
+<div class="background"></div>
+
+<div class="container">
+
+<div id="heartLock" class="heart">
+♥
+</div>
+
+<div id="envelope" class="envelope">
+
+<div class="flap"></div>
+
+<div class="letter" id="letter">
+
+<div class="page page-top" id="pageTop"></div>
+
+<div class="page page-middle">
+
+<div class="question" id="question">
+
+<h1>Ça va Askim ?</h1>
+
+<div class="buttons">
+
+<button id="yesBtn">
+Oui
+</button>
+
+<button id="noBtn">
+Non
 </button>
 
 </div>
 
 </div>
+
+</div>
+
+<div class="page page-bottom" id="pageBottom"></div>
+
+</div>
+
+</div>
+
+<div class="secondLetter" id="secondLetter">
+
+<h2>Pourquoi ça va pas ?</h2>
+
+<textarea
+id="message"
+placeholder="Écris ici...">
+</textarea>
+
+<button id="sendBtn">
+Envoyer
+</button>
+
+<p id="success"></p>
+
+</div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
