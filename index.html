@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lettre</title>
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    background: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    position: relative;
+    text-align: center;
+}
+
+.envelope {
+    width: 280px;
+    height: 180px;
+    background: white;
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.heart {
+    position: absolute;
+    top: 65px;
+    left: 110px;
+    font-size: 60px;
+    color: #008cff;
+    cursor: pointer;
+    transition: 0.5s;
+    z-index: 5;
+}
+
+.explode {
+    transform: scale(3);
+    opacity: 0;
+}
+
+.letter {
+    position: absolute;
+    width: 240px;
+    height: 320px;
+    background: white;
+    left: 20px;
+    top: -20px;
+    border-radius: 5px;
+    transform: translateY(0);
+    opacity: 0;
+    transition: 1s;
+    overflow: hidden;
+}
+
+.letter.open {
+    top: -180px;
+    opacity: 1;
+}
+
+.top {
+    height: 50%;
+    background: white;
+    border-bottom: 1px solid #ddd;
+    transition: 1s;
+}
+
+.bottom {
+    height: 50%;
+    background: white;
+    transition: 1s;
+}
+
+.letter.open .top {
+    transform: translateY(-80px);
+}
+
+.letter.open .bottom {
+    transform: translateY(80px);
+}
+
+.text {
+    position: absolute;
+    top: 120px;
+    width: 100%;
+    color: black;
+    font-size: 22px;
+    opacity: 0;
+    transition: 1s;
+}
+
+.show {
+    opacity: 1;
+}
+
+button {
+    margin: 20px 10px;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 20px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.non {
+    background: red;
+    color: white;
+}
+
+.oui {
+    background: green;
+    color: white;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="envelope">
+
+<div class="heart" onclick="openLetter()">💙</div>
+
+<div class="letter" id="letter">
+
+<div class="top"></div>
+<div class="bottom"></div>
+
+<div class="text" id="text">
+Ça va Askim ?
+<br>
+
+<button class="non" onclick="window.location.href='index2non.html'">
+Non
+</button>
+
+<button class="oui" onclick="window.location.href='index2oui.html'">
+Oui
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+function openLetter(){
+
+let heart=document.querySelector(".heart");
+let letter=document.getElementById("letter");
+let text=document.getElementById("text");
+
+heart.classList.add("explode");
+
+setTimeout(()=>{
+
+letter.classList.add("open");
+
+setTimeout(()=>{
+
+text.classList.add("show");
+
+},1000);
+
+},500);
+
+}
+
+</script>
+
+</body>
+</html>
