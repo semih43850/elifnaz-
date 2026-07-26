@@ -1,386 +1,268 @@
-
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pour Elifnaz ❤️</title>
+<title>Pour Elifnaz</title>
 
 <style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,Helvetica,sans-serif;
+* {
+    box-sizing: border-box;
+    font-family: "Georgia", serif;
 }
 
-body{
-overflow:hidden;
-background:linear-gradient(135deg,#ffd6ec,#ffeef7,#dff8ff);
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
+body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #e8f1ff, #ffffff);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
 }
 
-#container{
-text-align:center;
-z-index:5;
+.container {
+    text-align: center;
 }
 
-h1{
-font-size:50px;
-color:#ff2e6d;
-margin-bottom:40px;
-text-shadow:0 0 15px white;
+.envelope {
+    width: 260px;
+    height: 170px;
+    background: #f5f5f5;
+    position: relative;
+    border-radius: 8px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+    cursor: pointer;
+    transition: 1s;
 }
 
-button{
-padding:18px 45px;
-font-size:28px;
-border:none;
-border-radius:18px;
-cursor:pointer;
-transition:.3s;
-margin:20px;
+.envelope:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-left: 130px solid transparent;
+    border-right: 130px solid transparent;
+    border-top: 90px solid #dbe9ff;
 }
 
-#yes{
-background:#34d399;
-color:white;
+.heart {
+    position: absolute;
+    top: 60px;
+    left: 105px;
+    width: 50px;
+    height: 50px;
+    background: #2f80ed;
+    transform: rotate(-45deg);
+    transition: .5s;
+    z-index: 2;
 }
 
-#no{
-background:#ff5c8a;
-color:white;
+.heart:before,
+.heart:after {
+    content:"";
+    position:absolute;
+    width:50px;
+    height:50px;
+    background:#2f80ed;
+    border-radius:50%;
 }
 
-#emoji{
-position:absolute;
-top:45%;
-left:50%;
-transform:translate(-50%,-50%);
-font-size:100px;
-display:none;
-z-index:20;
-animation:pop .8s;
+.heart:before {
+    top:-25px;
+    left:0;
 }
 
-@keyframes pop{
-
-0%{transform:translate(-50%,-50%) scale(.2);}
-100%{transform:translate(-50%,-50%) scale(1);}
-
+.heart:after {
+    left:25px;
+    top:0;
 }
 
-#love{
-display:none;
-position:absolute;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-font-size:70px;
-color:#ff2e6d;
-font-weight:bold;
-text-shadow:0 0 20px white;
-z-index:30;
-animation:zoom 2s infinite;
+.envelope.open .heart {
+    opacity:0;
 }
 
-@keyframes zoom{
-
-0%{transform:translate(-50%,-50%) scale(.8);}
-50%{transform:translate(-50%,-50%) scale(1.15);}
-100%{transform:translate(-50%,-50%) scale(.8);}
-
+.letter {
+    position:absolute;
+    width:230px;
+    min-height:300px;
+    background:white;
+    left:15px;
+    top:20px;
+    border-radius:5px;
+    padding:20px;
+    box-shadow:0 10px 30px rgba(0,0,0,.2);
+    transform:translateY(80px) scale(.7);
+    opacity:0;
+    transition:1.5s;
+    overflow:hidden;
 }
 
-.petal{
-position:absolute;
-top:-40px;
-font-size:30px;
-animation:fall linear infinite;
-pointer-events:none;
+.envelope.open .letter {
+    transform:translateY(-220px) scale(1);
+    opacity:1;
 }
 
-@keyframes fall{
-
-0%{
-transform:translateY(-30px) rotate(0deg);
-opacity:1;
+.part {
+    max-height:0;
+    overflow:hidden;
+    transition:1s;
+    opacity:0;
 }
 
-100%{
-transform:translateY(120vh) rotate(360deg);
-opacity:0;
+.part.show {
+    max-height:200px;
+    opacity:1;
 }
 
+button {
+    margin:10px;
+    padding:12px 30px;
+    border:none;
+    border-radius:20px;
+    cursor:pointer;
+    font-size:16px;
 }
 
-.confetti{
-position:absolute;
-width:10px;
-height:18px;
-animation:confetti 4s linear forwards;
+.yes {
+    background:#2f80ed;
+    color:white;
 }
 
-@keyframes confetti{
-
-0%{
-transform:translateY(-50px) rotate(0);
-opacity:1;
+.no {
+    background:#ddd;
 }
 
-100%{
-transform:translateY(110vh) rotate(900deg);
-opacity:0;
+textarea {
+    width:90%;
+    height:80px;
+    margin-top:15px;
+    border-radius:10px;
+    padding:10px;
+    resize:none;
 }
 
+.send {
+    background:#2f80ed;
+    color:white;
 }
 
-#cat{
-display:none;
-position:absolute;
-left:-200px;
-bottom:80px;
-font-size:120px;
-z-index:40;
-animation:walk 8s linear forwards;
+.hidden {
+    display:none;
 }
 
-@keyframes walk{
-
-0%{left:-200px;}
-
-100%{left:120%;}
-
-}
-
-#bubble{
-display:none;
-position:absolute;
-left:40%;
-bottom:230px;
-background:white;
-padding:15px 25px;
-border-radius:30px;
-font-size:28px;
-box-shadow:0 0 20px rgba(0,0,0,.2);
-z-index:50;
-}
-
-#kiss{
-display:none;
-position:absolute;
-font-size:70px;
-left:50%;
-top:40%;
-transform:translate(-50%,-50%);
-animation:kiss 1.5s infinite;
-z-index:60;
-}
-
-@keyframes kiss{
-
-0%{transform:translate(-50%,-50%) scale(.7);}
-50%{transform:translate(-50%,-50%) scale(1.3);}
-100%{transform:translate(-50%,-50%) scale(.7);}
-
-}
-
-.dog{
-position:absolute;
-font-size:70px;
-animation:bounce 2s infinite;
-}
-
-@keyframes bounce{
-
-0%{transform:translateY(0);}
-50%{transform:translateY(-20px);}
-100%{transform:translateY(0);}
-
+h2 {
+    font-weight:normal;
 }
 
 </style>
-
 </head>
 
 <body>
 
-<div id="emoji">☺️</div>
+<div class="container">
 
-<div id="love">
-Je t'aime Elifnaz ❤️
+<div class="envelope" onclick="openEnvelope()">
+
+<div class="heart"></div>
+
+<div class="letter">
+
+<div class="part show">
+<h2>Elifnaz</h2>
+<p>Ça va ?</p>
+
+<button class="yes" onclick="event.stopPropagation(); yes()">Oui</button>
+<button class="no" onclick="event.stopPropagation(); no()">Non</button>
+
 </div>
 
-<div id="cat">
-🐱
+
+<div class="part" id="second">
+<p>
+J’espère que tu vas bien.
+J’ai créé cette petite lettre pour toi.
+</p>
 </div>
 
-<div id="bubble">
-Miaou ! 😽
+
+<div class="part" id="third">
+<p>
+Merci d’être une personne importante dans ma vie.
+</p>
 </div>
 
-<div id="kiss">
-😘
-</div>
 
-<div id="container">
+<div id="problem" class="hidden">
 
-<h1>Est-ce que tu m'aimes ? ❤️</h1>
+<p>
+Pourquoi ça ne va pas ?
+</p>
 
-<button id="yes">
-Oui
+<textarea id="answer" placeholder="Écris ta réponse ici..."></textarea>
+
+<br>
+
+<button class="send" onclick="sendMessage()">
+Envoyer
 </button>
 
-<button id="no">
-Non
-</button>
+</div>
+
 
 </div>
+
+</div>
+
+</div>
+
 
 <script>
 
-let yes=document.getElementById("yes");
-let no=document.getElementById("no");
+let opened=false;
 
-let emoji=document.getElementById("emoji");
-let love=document.getElementById("love");
-let cat=document.getElementById("cat");
-let bubble=document.getElementById("bubble");
-let kiss=document.getElementById("kiss");
+function openEnvelope(){
+    if(!opened){
+        document.querySelector(".envelope").classList.add("open");
+        opened=true;
 
-let clicks=0;
-let ready=false;
-let size=1;
+        setTimeout(()=>{
+            document.getElementById("second").classList.add("show");
+        },2000);
 
-yes.onclick=function(){
+        setTimeout(()=>{
+            document.getElementById("third").classList.add("show");
+        },4000);
+    }
+}
 
-if(!ready){
 
-emoji.style.display="block";
+function yes(){
+    alert("Merci de me le dire.");
+}
 
-setTimeout(function(){
 
-emoji.style.display="none";
+function no(){
 
-},1000);
-
-return;
+    document.getElementById("problem").classList.remove("hidden");
 
 }
 
-document.getElementById("container").style.display="none";
 
-for(let i=0;i<250;i++){
+function sendMessage(){
 
-let c=document.createElement("div");
+let text=document.getElementById("answer").value;
 
-c.className="confetti";
+let message=
+"Elle a répondu que ça n'allait pas : "+text;
 
-c.style.left=Math.random()*100+"vw";
+let whatsapp=
+"https://wa.me/3248451044?text="
++encodeURIComponent(message);
 
-c.style.background=
-Math.random()>0.5?
-"#00d084":
-"#3b82f6";
-
-c.style.animationDuration=
-2+Math.random()*3+"s";
-
-document.body.appendChild(c);
+window.open(whatsapp,"_blank");
 
 }
-
-for(let i=0;i<70;i++){
-
-let p=document.createElement("div");
-
-p.className="petal";
-
-p.innerHTML="🌸";
-
-p.style.left=Math.random()*100+"vw";
-
-p.style.animationDuration=
-4+Math.random()*5+"s";
-
-p.style.fontSize=
-20+Math.random()*25+"px";
-
-document.body.appendChild(p);
-
-}
-
-cat.style.display="block";
-bubble.style.display="block";
-
-setTimeout(function(){
-
-bubble.style.display="none";
-
-},2500);
-
-setTimeout(function(){
-
-kiss.style.display="block";
-
-},5000);
-
-setTimeout(function(){
-
-kiss.style.display="none";
-
-love.style.display="block";
-
-},7000);
-
-setTimeout(function(){
-
-for(let i=0;i<25;i++){
-
-let dog=document.createElement("div");
-
-dog.className="dog";
-
-dog.innerHTML="🐶";
-
-dog.style.left=Math.random()*95+"vw";
-dog.style.top=Math.random()*90+"vh";
-dog.style.animationDelay=Math.random()*2+"s";
-
-document.body.appendChild(dog);
-
-}
-
-},9000);
-
-};
-
-no.onclick=function(){
-
-clicks++;
-
-size+=0.35;
-
-yes.style.transform="scale("+size+")";
-
-let noScale=Math.max(0,1-clicks*0.18);
-
-no.style.transform="scale("+noScale+")";
-
-if(clicks>=6){
-
-no.style.display="none";
-
-ready=true;
-
-}
-
-};
 
 </script>
 
