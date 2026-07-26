@@ -3,83 +3,183 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MiniCraft</title>
+<title>MiniCraft - Démo</title>
+
 <style>
-body{
+*{
     margin:0;
-    overflow:hidden;
-    background:#87CEEB;
+    padding:0;
+    box-sizing:border-box;
 }
+
+body{
+    background:#7ec850;
+    font-family:Arial,sans-serif;
+    overflow:hidden;
+}
+
+#menu{
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:linear-gradient(#5aa9e6,#7ec850);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap:20px;
+}
+
+h1{
+    font-size:60px;
+    color:white;
+    text-shadow:4px 4px #000;
+}
+
+button{
+    width:260px;
+    padding:15px;
+    font-size:22px;
+    cursor:pointer;
+    border:none;
+    background:#6b6b6b;
+    color:white;
+}
+
+button:hover{
+    background:#888;
+}
+
+#game{
+    display:none;
+    width:100vw;
+    height:100vh;
+}
+
 canvas{
     display:block;
+    background:#79c05a;
 }
 </style>
 </head>
+
 <body>
 
-<canvas id="game"></canvas>
+<div id="menu">
+    <h1>MiniCraft</h1>
+
+    <button onclick="startGame()">▶ Jouer</button>
+    <button onclick="alert('Version Démo HTML')">Options</button>
+</div>
+
+<div id="game">
+    <canvas id="canvas"></canvas>
+</div>
 
 <script>
-const canvas = document.getElementById("game");
-const ctx = canvas.getContext("2d");
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+const menu=document.getElementById("menu");
+const game=document.getElementById("game");
+const canvas=document.getElementById("canvas");
+const ctx=canvas.getContext("2d");
 
-let player = {
-    x:100,
-    y:200,
-    w:40,
-    h:60,
-    color:"#00AAFF"
-};
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
 
-let blocks = [];
-for(let i=0;i<25;i++){
-    blocks.push({
-        x:i*50,
-        y:400,
-        w:50,
-        h:50,
-        color:"#4CAF50"
-    });
+const tile=40;
+
+const world=[];
+
+const cols=Math.ceil(canvas.width/tile);
+const rows=Math.ceil(canvas.height/tile);
+
+for(let y=0;y<rows;y++){
+
+    world[y]=[];
+
+    for(let x=0;x<cols;x++){
+
+        if(y>10)
+            world[y][x]=1;
+        else
+            world[y][x]=0;
+
+    }
+
 }
+
+const player={
+    x:100,
+    y:100,
+    w:30,
+    h:30,
+    speed:5
+};
 
 const keys={};
 
-addEventListener("keydown",e=>keys[e.key]=true);
-addEventListener("keyup",e=>keys[e.key]=false);
+document.addEventListener("keydown",e=>keys[e.key]=true);
+document.addEventListener("keyup",e=>keys[e.key]=false);
+
+canvas.addEventListener("click",e=>{
+
+    let x=Math.floor(e.offsetX/tile);
+    let y=Math.floor(e.offsetY/tile);
+
+    if(world[y])
+        world[y][x]=world[y][x]?0:1;
+
+});
+
+function startGame(){
+
+    menu.style.display="none";
+    game.style.display="block";
+
+    update();
+
+}
 
 function update(){
-    if(keys["ArrowLeft"]) player.x-=5;
-    if(keys["ArrowRight"]) player.x+=5;
-    if(keys["ArrowUp"]) player.y-=5;
-    if(keys["ArrowDown"]) player.y+=5;
+
+    if(keys["ArrowLeft"]||keys["q"]) player.x-=player.speed;
+    if(keys["ArrowRight"]||keys["d"]) player.x+=player.speed;
+    if(keys["ArrowUp"]||keys["z"]) player.y-=player.speed;
+    if(keys["ArrowDown"]||keys["s"]) player.y+=player.speed;
+
+    draw();
+
+    requestAnimationFrame(update);
+
 }
 
 function draw(){
-    ctx.fillStyle="#87CEEB";
-    ctx.fillRect(0,0,canvas.width,canvas.height);
 
-    blocks.forEach(b=>{
-        ctx.fillStyle=b.color;
-        ctx.fillRect(b.x,b.y,b.w,b.h);
+    ctx.clearRect(0,0,canvas.width,canvas.height);
 
-        ctx.strokeStyle="#654321";
-        ctx.strokeRect(b.x,b.y,b.w,b.h);
-    });
+    for(let y=0;y<rows;y++){
 
-    ctx.fillStyle=player.color;
+        for(let x=0;x<cols;x++){
+
+            if(world[y][x]){
+
+                ctx.fillStyle="#8B5A2B";
+                ctx.fillRect(x*tile,y*tile,tile,tile);
+
+                ctx.strokeStyle="#000";
+                ctx.strokeRect(x*tile,y*tile,tile,tile);
+
+            }
+
+        }
+
+    }
+
+    ctx.fillStyle="red";
     ctx.fillRect(player.x,player.y,player.w,player.h);
+
 }
 
-function loop(){
-    update();
-    draw();
-    requestAnimationFrame(loop);
-}
-
-loop();
 </script>
 
 </body>
